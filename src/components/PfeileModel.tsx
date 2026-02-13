@@ -6,7 +6,7 @@ import * as THREE from "three";
 import { useFrame } from "@react-three/fiber";
 
 export default function PfeileModel() {
-  const { scene } = useGLTF("/Eingangspfeile1.glb");
+  const { scene } = useGLTF("/Eingangspfeile.glb");
   const groupRef = useRef<THREE.Group>(null);
 
   useFrame((state) => {
