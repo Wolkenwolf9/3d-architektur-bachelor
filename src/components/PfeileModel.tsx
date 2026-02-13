@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef } from "react";
-import { Edges, useGLTF } from "@react-three/drei";
+import { useGLTF } from "@react-three/drei";
 import * as THREE from "three";
 import { useFrame } from "@react-three/fiber";
 
