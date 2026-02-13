@@ -34,14 +34,16 @@ export default function CameraToggle({ onChange }: CameraToggleProps) {
             active === m.id ? "text-white" : "text-zinc-400"
           }`}
         >
-          <motion.div
-            className='absolute inset-0 rounded-full bg-zinc-700'
-            layoutId='activeBg'
-            transition={{ type: "spring", stiffness: 300, damping: 30 }}
-            animate={{
-              opacity: active === m.id ? 1 : 0,
-            }}
-          />
+          {active === m.id && (
+            <motion.div
+              className='absolute inset-0 rounded-full bg-zinc-700'
+              layoutId='activeBg'
+              transition={{ type: "spring", stiffness: 300, damping: 30 }}
+              animate={{
+                opacity: active === m.id ? 1 : 0,
+              }}
+            />
+          )}
           <div className='relative flex items-center gap-2 z-10'>
             {m.icon}
             <span className='hidden sm:inline'>{m.label}</span>
