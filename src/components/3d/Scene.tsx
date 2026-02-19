@@ -5,12 +5,12 @@ import { Environment, OrbitControls, useGLTF } from '@react-three/drei';
 import Model from './models/BauwesenModel';
 import CameraRig from './CameraRig';
 import { Suspense, useEffect, useState } from 'react';
-import CameraToggle from './CameraToggle';
+import CameraToggle from '../ui/CameraToggle';
 import PfeileModel from './models/PfeileModel';
 import VirtualStudioModel from './models/VirtualStudioModel';
 import Preloader from './Preloader';
 import AufzügeModel from './models/AufzügeModel';
-import Toggle from './ui/Toggle';
+import Toggle from '../ui/Toggle';
 import MensaModel from './models/MensaModel';
 
 // function CameraRig() {

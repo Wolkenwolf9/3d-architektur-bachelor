@@ -2,7 +2,7 @@ import '@/styles/globals.css';
 import dynamic from 'next/dynamic';
 import Home from '.';
 
-const Scene = dynamic(() => import('@/components/Scene'), {
+const Scene = dynamic(() => import('@/components/3d/Scene'), {
   ssr: false,
   // loading: () => <p className="left-1/2 top-1/2 text-md">Loading...</p>,
 });

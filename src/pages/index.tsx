@@ -1,6 +1,6 @@
 import React from 'react';
 import { Plus_Jakarta_Sans } from 'next/font/google';
-import Scene from '@/components/Scene';
+import Scene from '@/components/3d/Scene';
 
 // Schrift einbinden
 const plusJakarta = Plus_Jakarta_Sans({
