@@ -42,7 +42,11 @@ export default function Scene() {
   }, []);
   return (
     <div className='relative w-full h-screen'>
-      <Canvas style={{ background: '#0a0a0a' }}>
+      <Canvas
+        style={{ background: '#0a0a0a' }}
+        shadows
+        camera={{ near: 0.1, fov: 75 }}
+      >
         <Suspense fallback={<Preloader />}>
           {/* <ScrollControls pages={3}> */}
           <CameraRig mode={cameraMode} />
@@ -51,7 +55,8 @@ export default function Scene() {
           {/* <OrbitControls /> */}
           <Environment preset='city' background={false} />
           {/* <directionalLight></directionalLight> */}
-          <ambientLight intensity={0.5} />
+          <ambientLight intensity={0.1} />
+          <directionalLight position={[1, 1, 1]} intensity={5} castShadow />
           <Model spread={spread} />
           {showArrows && <PfeileModel />}
           {showVirtualStudio && <VirtualStudioModel />}

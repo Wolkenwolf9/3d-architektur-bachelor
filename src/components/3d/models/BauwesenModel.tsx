@@ -1,16 +1,16 @@
-"use client";
+'use client';
 
-import { useGLTF } from "@react-three/drei";
-import { useMemo, useRef, useEffect } from "react";
-import * as THREE from "three";
-import { useFrame } from "@react-three/fiber";
+import { useGLTF } from '@react-three/drei';
+import { useMemo, useRef, useEffect } from 'react';
+import * as THREE from 'three';
+import { useFrame } from '@react-three/fiber';
 
 type ModelProps = {
   spread?: boolean;
 };
 
 export default function Model({ spread = false }: ModelProps) {
-  const { scene } = useGLTF("/Haus-Bauwesen-standard_komprimiert.glb");
+  const { scene } = useGLTF('/Haus-Bauwesen-standard_komprimiert.glb');
   const groupRef = useRef<THREE.Group>(null);
 
   // Alle Meshes extrahieren und klonen (damit sie unabhängig sind)
@@ -22,6 +22,10 @@ export default function Model({ spread = false }: ModelProps) {
         clone.position.copy(child.position);
         clone.rotation.copy(child.rotation);
         clone.scale.copy(child.scale);
+
+        clone.castShadow = true;
+        clone.receiveShadow = true;
+
         result.push(clone);
       }
     });
