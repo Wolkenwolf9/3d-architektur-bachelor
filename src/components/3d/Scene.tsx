@@ -12,6 +12,9 @@ import Preloader from './Preloader';
 import AufzügeModel from './models/AufzügeModel';
 import Toggle from '../ui/Toggle';
 import MensaModel from './models/MensaModel';
+import CameraDebug from '../debug/CameraTracker';
+import CameraTracker from '../debug/CameraTracker';
+import CameraDebugPanel from '../ui/CameraDebugPanel';
 
 // function CameraRig() {
 //   const scroll = useScroll();
@@ -36,6 +39,9 @@ export default function Scene() {
   const [showVirtualStudio, setShowVirtualStudio] = useState(false);
   const [showAufzüge, setShowAufzüge] = useState(false);
   const [showMensa, setShowMensa] = useState(false);
+  const [showCameraDebug, setShowCameraDebug] = useState(false);
+  const [cameraDebugText, setCameraDebugText] = useState('');
+
   useEffect(() => {
     useGLTF.preload('/Haus-Bauwesen-standard_komprimiert.glb');
     useGLTF.preload('/Eingangspfeile.glb');
@@ -50,6 +56,10 @@ export default function Scene() {
         <Suspense fallback={<Preloader />}>
           {/* <ScrollControls pages={3}> */}
           <CameraRig mode={cameraMode} />
+          <CameraTracker
+            enabled={showCameraDebug}
+            onUpdate={setCameraDebugText}
+          />
           {cameraMode === 'orbit' && <OrbitControls enableDamping />}
           {/* <CameraRig /> */}
           {/* <OrbitControls /> */}
@@ -66,6 +76,7 @@ export default function Scene() {
         </Suspense>
       </Canvas>
       <CameraToggle onChange={setCameraMode} />
+      <CameraDebugPanel enabled={showCameraDebug} text={cameraDebugText} />
       {/* //Button zum auffächern des Modells */}
       <button
         onClick={() => setSpread(!spread)}
@@ -97,6 +108,12 @@ export default function Scene() {
           label='Mensa anzeigen'
           checked={showMensa}
           onChange={setShowMensa}
+        />
+
+        <Toggle
+          label='Kamera Debug'
+          checked={showCameraDebug}
+          onChange={setShowCameraDebug}
         />
       </div>
     </div>

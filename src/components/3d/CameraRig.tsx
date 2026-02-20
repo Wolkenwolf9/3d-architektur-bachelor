@@ -1,8 +1,8 @@
-"use client";
+'use client';
 
-import { useFrame, useThree } from "@react-three/fiber";
-import { useRef } from "react";
-import * as THREE from "three";
+import { useFrame, useThree } from '@react-three/fiber';
+import { useRef } from 'react';
+import * as THREE from 'three';
 
 interface CameraRigProps {
   mode: string;
@@ -16,25 +16,25 @@ export default function CameraRig({ mode }: CameraRigProps) {
   useFrame(() => {
     // Definiere Zielposition abhängig vom Modus
     switch (mode) {
-      case "overview":
+      case 'overview':
         targetPosition.current.set(-5, 2, -1.5); // leicht oben rechts
         break;
-      case "side":
+      case 'side':
         targetPosition.current.set(5, 2, 0); // Seitenprofil
         break;
-      case "top":
+      case 'top':
         targetPosition.current.set(0, 6, 0.1); // Vogelperspektive
         break;
-      case "front":
+      case 'front':
         targetPosition.current.set(0, 2, 5); // Frontalansicht
         break;
-      case "orbit":
+      case 'orbit':
       default:
         // In Orbit-Modus bewegt sich Kamera frei (kein Update hier)
         break;
     }
 
-    if (mode !== "orbit") {
+    if (mode !== 'orbit') {
       // Sanfte Interpolation der Kamera
       camera.position.lerp(targetPosition.current, 0.05);
       camera.lookAt(lookAtTarget);
