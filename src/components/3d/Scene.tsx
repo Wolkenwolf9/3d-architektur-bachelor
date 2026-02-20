@@ -12,7 +12,6 @@ import Preloader from './Preloader';
 import AufzügeModel from './models/AufzügeModel';
 import Toggle from '../ui/Toggle';
 import MensaModel from './models/MensaModel';
-import CameraDebug from '../debug/CameraTracker';
 import CameraTracker from '../debug/CameraTracker';
 import CameraDebugPanel from '../ui/CameraDebugPanel';
 
@@ -64,9 +63,8 @@ export default function Scene() {
           {/* <CameraRig /> */}
           {/* <OrbitControls /> */}
           <Environment preset='city' background={false} />
-          {/* <directionalLight></directionalLight> */}
           <ambientLight intensity={0.1} />
-          <directionalLight position={[1, 1, 1]} intensity={5} castShadow />
+          {/* <directionalLight position={[1, 1, 1]} intensity={5} castShadow /> */}
           <Model spread={spread} />
           {showArrows && <PfeileModel />}
           {showVirtualStudio && <VirtualStudioModel />}
