@@ -1,11 +1,15 @@
-"use client";
+'use client';
 
-import { useRef, useState } from "react";
-import * as THREE from "three";
-import { useFrame } from "@react-three/fiber";
-import { Html } from "@react-three/drei";
+import { useRef, useState } from 'react';
+import * as THREE from 'three';
+import { useFrame } from '@react-three/fiber';
+import { Html } from '@react-three/drei';
 
-export default function VirtualStudioModel() {
+export default function VirtualStudioModel({
+  onEnter360,
+}: {
+  onEnter360?: () => void;
+}) {
   const meshRef = useRef<THREE.Mesh>(null);
   const [hovered, setHovered] = useState(false);
 
@@ -22,6 +26,10 @@ export default function VirtualStudioModel() {
       <mesh
         onPointerEnter={() => setHovered(true)}
         onPointerLeave={() => setHovered(false)}
+        onClick={(e) => {
+          e.stopPropagation();
+          onEnter360?.();
+        }}
         ref={meshRef}
         position={[-62, 6, -9]}
       >
@@ -33,9 +41,38 @@ export default function VirtualStudioModel() {
           depthTest={false}
         />
         {hovered && (
-          <Html position={[0, 15, 0]}>
-            <div className='text-2x top-4 right-4 bg-white/10 text-white backdrop-blur-md border border-zinc-700 rounded-full px-4 py-2 hover:bg-white/20 transition whitespace-nowrap'>
-              Virtual Studio
+          <Html position={[20, 40, -20]}>
+            <div className='w-[320px] rounded-2xl overflow-hidden border border-white/15 bg-black/70 backdrop-blur-xl shadow-2xl'>
+              <div className='relative h-[150px] w-full'>
+                <img
+                  src='/Studio1.png'
+                  alt='CampusTV Studio'
+                  className='h-full w-full object-cover'
+                  draggable={false}
+                />
+                <div className='absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent' />
+              </div>
+
+              <div className='p-4'>
+                <div className='flex items-center justify-between gap-3'>
+                  <div className='text-base font-semibold text-white'>
+                    Virtuelles Studio
+                  </div>
+                  <span className='text-[11px] px-2 py-1 rounded-full border border-white/15 bg-white/10 text-white/80'>
+                    360°
+                  </span>
+                </div>
+
+                <p className='mt-2 text-sm text-white/70'>
+                  Ein Blick ins CampusTV / Lehrfilmstudio - interaktiv in einer
+                  360°-Ansicht.
+                </p>
+
+                <div className='mt-4 inline-flex items-center gap-2 rounded-full bg-white/10 px-3 py-1.5 text-xs font-medium text-white/90 border border-white/15'>
+                  <span className='inline-block h-2 w-2 rounded-full bg-emerald-400' />
+                  Für 360°-Tour klicken
+                </div>
+              </div>
             </div>
           </Html>
         )}

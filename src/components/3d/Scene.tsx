@@ -4,8 +4,8 @@ import { Canvas } from '@react-three/fiber';
 import { Environment, OrbitControls, useGLTF } from '@react-three/drei';
 import Model from './models/BauwesenModel';
 import CameraRig from './CameraRig';
-import { Suspense, useEffect, useState } from 'react';
-import CameraToggle from '../ui/CameraToggle';
+import { Suspense, useEffect, useRef, useState } from 'react';
+import CameraToggle, { CameraMode } from '../ui/CameraToggle';
 import PfeileModel from './models/PfeileModel';
 import VirtualStudioModel from './models/VirtualStudioModel';
 import Preloader from './Preloader';
@@ -15,6 +15,8 @@ import MensaModel from './models/MensaModel';
 import CameraTracker from '../debug/CameraTracker';
 import CameraDebugPanel from '../ui/CameraDebugPanel';
 import VirtualStudio360 from './models/VirtualStudio360';
+import Studio360Camera from './Studio360Camera';
+import VirtualStudioOverlay from '../ui/VirtualStudioOverlay';
 
 // function CameraRig() {
 //   const scroll = useScroll();
@@ -32,8 +34,10 @@ import VirtualStudio360 from './models/VirtualStudio360';
 //   return null;
 // }
 
+// type CameraMode = 'overview' | 'side' | 'top' | 'front' | 'orbit' | 'studio360';
+
 export default function Scene() {
-  const [cameraMode, setCameraMode] = useState('front');
+  const [cameraMode, setCameraMode] = useState<CameraMode>('front');
   const [spread, setSpread] = useState(false);
   const [showArrows, setShowArrows] = useState(false);
   const [showVirtualStudio, setShowVirtualStudio] = useState(false);
@@ -42,10 +46,24 @@ export default function Scene() {
   const [showCameraDebug, setShowCameraDebug] = useState(false);
   const [cameraDebugText, setCameraDebugText] = useState('');
 
+  const controlsRef = useRef<any>(null);
+
+  const STUDIO_CENTER: [number, number, number] = [-2.48, 0.24, -0.36];
+  const in360 = cameraMode === 'studio360';
+
   useEffect(() => {
     useGLTF.preload('/Haus-Bauwesen-standard_komprimiert.glb');
     useGLTF.preload('/Eingangspfeile.glb');
   }, []);
+
+  const enterStudio360 = () => {
+    setCameraMode('studio360');
+  };
+
+  const exitStudio360 = (next: CameraMode = 'orbit') => {
+    setCameraMode(next);
+  };
+
   return (
     <div className='relative w-full h-screen'>
       <Canvas
@@ -60,24 +78,60 @@ export default function Scene() {
             enabled={showCameraDebug}
             onUpdate={setCameraDebugText}
           />
-          {cameraMode === 'orbit' && <OrbitControls enableDamping />}
+          {cameraMode === 'orbit' && (
+            <OrbitControls ref={controlsRef} makeDefault enableDamping />
+          )}
           {/* <CameraRig /> */}
+          {in360 && (
+            <OrbitControls
+              ref={controlsRef}
+              makeDefault
+              enableDamping
+              enableZoom={false}
+              enablePan={false}
+              rotateSpeed={0.6}
+            />
+          )}
           {/* <OrbitControls /> */}
           <Environment preset='city' background={false} />
           <ambientLight intensity={0.1} />
+          {/* 360: Kamera zentrieren + Sphere anzeigen */}
+          {in360 && (
+            <>
+              <Studio360Camera
+                center={STUDIO_CENTER}
+                controlsRef={controlsRef}
+              />
+              <VirtualStudio360 />
+            </>
+          )}
           {/* <directionalLight position={[1, 1, 1]} intensity={5} castShadow /> */}
-          <Model spread={spread} />
-          <VirtualStudio360 />
-          {showArrows && <PfeileModel />}
-          {showVirtualStudio && <VirtualStudioModel />}
-          {showAufzüge && <AufzügeModel />}
-          {showMensa && <MensaModel />}
+          {!in360 && (
+            <>
+              <Model spread={spread} />
+              {showArrows && <PfeileModel />}
+              {showVirtualStudio && (
+                <VirtualStudioModel onEnter360={enterStudio360} />
+              )}
+              {showAufzüge && <AufzügeModel />}
+              {showMensa && <MensaModel />}
+            </>
+          )}
           {/* </ScrollControls> */}
         </Suspense>
       </Canvas>
-      <CameraToggle onChange={setCameraMode} />
+      <CameraToggle
+        activeMode={cameraMode === 'studio360' ? null : cameraMode}
+        onChange={(m) => setCameraMode(m)}
+      />
+
       <CameraDebugPanel enabled={showCameraDebug} text={cameraDebugText} />
       {/* //Button zum auffächern des Modells */}
+      <VirtualStudioOverlay
+        open={in360}
+        onClose={() => exitStudio360('orbit')}
+      />
+
       <button
         onClick={() => setSpread(!spread)}
         className='absolute top-4 right-4 bg-white/10 text-white backdrop-blur-md border border-zinc-700 rounded-full px-4 py-2 hover:bg-white/20 transition'

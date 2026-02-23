@@ -14,6 +14,7 @@ export default function CameraRig({ mode }: CameraRigProps) {
   const lookAtTarget = new THREE.Vector3(0, 0, 0);
 
   useFrame(() => {
+    if (mode === 'studio360') return;
     // Definiere Zielposition abhängig vom Modus
     switch (mode) {
       case 'overview':

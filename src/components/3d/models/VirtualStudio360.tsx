@@ -12,7 +12,7 @@ type Props = {
 
 export default function VirtualStudio360({
   textureUrl = '/shot-panoramic-composition-library.jpg',
-  radius = 0.04,
+  radius = 0.6,
   position = [-2.48, 0.24, -0.36],
 }: Props) {
   const texture = useTexture(textureUrl);
