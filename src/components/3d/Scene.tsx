@@ -14,6 +14,7 @@ import Toggle from '../ui/Toggle';
 import MensaModel from './models/MensaModel';
 import CameraTracker from '../debug/CameraTracker';
 import CameraDebugPanel from '../ui/CameraDebugPanel';
+import VirtualStudio360 from './models/VirtualStudio360';
 
 // function CameraRig() {
 //   const scroll = useScroll();
@@ -66,6 +67,7 @@ export default function Scene() {
           <ambientLight intensity={0.1} />
           {/* <directionalLight position={[1, 1, 1]} intensity={5} castShadow /> */}
           <Model spread={spread} />
+          <VirtualStudio360 />
           {showArrows && <PfeileModel />}
           {showVirtualStudio && <VirtualStudioModel />}
           {showAufzüge && <AufzügeModel />}
