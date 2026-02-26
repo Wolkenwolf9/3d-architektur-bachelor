@@ -1,9 +1,9 @@
-"use client";
+'use client';
 
-import { useRef, useState } from "react";
-import * as THREE from "three";
-import { useFrame } from "@react-three/fiber";
-import { Html } from "@react-three/drei";
+import { useRef, useState } from 'react';
+import * as THREE from 'three';
+import { useFrame } from '@react-three/fiber';
+import { Html } from '@react-three/drei';
 
 export default function MensaModel() {
   const meshRef = useRef<THREE.Mesh>(null);
@@ -27,7 +27,7 @@ export default function MensaModel() {
       >
         <boxGeometry args={[35.2, 6.62, 26.6]} />
         <meshStandardMaterial
-          color='#4bf542'
+          color='#FFDE21'
           transparent
           opacity={0.3}
           depthTest={false}

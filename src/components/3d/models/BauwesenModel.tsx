@@ -13,6 +13,9 @@ export default function Model({ spread = false }: ModelProps) {
   const { scene } = useGLTF('/Haus-Bauwesen-standard_komprimiert.glb');
   const groupRef = useRef<THREE.Group>(null);
 
+  // scene.traverse((o: any) => {
+  //   if (o.isMesh) console.log(o.name, o.material?.type);
+  // });
   // Alle Meshes extrahieren und klonen (damit sie unabhängig sind)
   const meshes = useMemo(() => {
     const result: THREE.Mesh[] = [];

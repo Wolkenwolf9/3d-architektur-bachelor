@@ -17,6 +17,7 @@ import CameraDebugPanel from '../ui/CameraDebugPanel';
 import VirtualStudio360 from './models/VirtualStudio360';
 import Studio360Camera from './Studio360Camera';
 import VirtualStudioOverlay from '../ui/VirtualStudioOverlay';
+import BibliothekModel from './models/BibliothekModel';
 
 // function CameraRig() {
 //   const scroll = useScroll();
@@ -43,6 +44,7 @@ export default function Scene() {
   const [showVirtualStudio, setShowVirtualStudio] = useState(false);
   const [showAufzüge, setShowAufzüge] = useState(false);
   const [showMensa, setShowMensa] = useState(false);
+  const [showBib, setShowBib] = useState(false);
   const [showCameraDebug, setShowCameraDebug] = useState(false);
   const [cameraDebugText, setCameraDebugText] = useState('');
 
@@ -93,8 +95,6 @@ export default function Scene() {
             />
           )}
           {/* <OrbitControls /> */}
-          <Environment preset='city' background={false} />
-          <ambientLight intensity={0.1} />
           {/* 360: Kamera zentrieren + Sphere anzeigen */}
           {in360 && (
             <>
@@ -105,7 +105,9 @@ export default function Scene() {
               <VirtualStudio360 />
             </>
           )}
-          {/* <directionalLight position={[1, 1, 1]} intensity={5} castShadow /> */}
+          <ambientLight intensity={1} />
+          <Environment preset='city' background={false} />
+          <directionalLight position={[1, 1, 1]} intensity={5} castShadow />
           {!in360 && (
             <>
               <Model spread={spread} />
@@ -114,6 +116,7 @@ export default function Scene() {
                 <VirtualStudioModel onEnter360={enterStudio360} />
               )}
               {showAufzüge && <AufzügeModel />}
+              {showBib && <BibliothekModel />}
               {showMensa && <MensaModel />}
             </>
           )}
@@ -162,6 +165,12 @@ export default function Scene() {
           label='Mensa anzeigen'
           checked={showMensa}
           onChange={setShowMensa}
+        />
+
+        <Toggle
+          label='Bibliothek anzeigen'
+          checked={showBib}
+          onChange={setShowBib}
         />
 
         <Toggle
