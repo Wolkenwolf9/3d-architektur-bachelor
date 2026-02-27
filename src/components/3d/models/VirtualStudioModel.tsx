@@ -4,6 +4,7 @@ import { useRef, useState } from 'react';
 import * as THREE from 'three';
 import { useFrame } from '@react-three/fiber';
 import { Html } from '@react-three/drei';
+import Image from 'next/image';
 
 export default function VirtualStudioModel({
   onEnter360,
@@ -43,8 +44,8 @@ export default function VirtualStudioModel({
         {hovered && (
           <Html position={[20, 40, -20]}>
             <div className='w-[320px] rounded-2xl overflow-hidden border border-white/15 bg-black/70 backdrop-blur-xl shadow-2xl'>
-              <div className='relative h-[150px] w-full'>
-                <img
+              <div className='relative w-60 aspect-video overflow-hidden rounded-lg'>
+                <Image
                   src='/Studio1.png'
                   alt='CampusTV Studio'
                   className='h-full w-full object-cover'

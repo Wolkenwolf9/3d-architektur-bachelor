@@ -1,13 +1,5 @@
 import React from 'react';
-import { Plus_Jakarta_Sans } from 'next/font/google';
 import dynamic from 'next/dynamic';
-
-// Schrift einbinden
-const plusJakarta = Plus_Jakarta_Sans({
-  subsets: ['latin'],
-  weight: ['400', '600', '700'],
-  variable: '--font-plus-jakarta',
-});
 
 const Scene = dynamic(() => import('@/components/3d/Scene'), {
   ssr: false,

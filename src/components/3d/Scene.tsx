@@ -19,6 +19,8 @@ import Studio360Camera from './Studio360Camera';
 import VirtualStudioOverlay from '../ui/VirtualStudioOverlay';
 import BibliothekModel from './models/BibliothekModel';
 
+import type { OrbitControls as OrbitControlsImpl } from 'three-stdlib';
+
 // function CameraRig() {
 //   const scroll = useScroll();
 //   const { camera } = useThree();
@@ -48,7 +50,7 @@ export default function Scene() {
   const [showCameraDebug, setShowCameraDebug] = useState(false);
   const [cameraDebugText, setCameraDebugText] = useState('');
 
-  const controlsRef = useRef<any>(null);
+  const controlsRef = useRef<OrbitControlsImpl | null>(null);
 
   const STUDIO_CENTER: [number, number, number] = [-2.48, 0.24, -0.36];
   const in360 = cameraMode === 'studio360';
