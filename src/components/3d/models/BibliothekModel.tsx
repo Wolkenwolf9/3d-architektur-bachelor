@@ -5,7 +5,11 @@ import * as THREE from 'three';
 import { useFrame } from '@react-three/fiber';
 import { Html } from '@react-three/drei';
 
-export default function BibliothekModel() {
+export default function BibliothekModel({
+  onEnter360,
+}: {
+  onEnter360?: () => void;
+}) {
   const meshRef1 = useRef<THREE.Mesh>(null);
   const meshRef2 = useRef<THREE.Mesh>(null);
   const [hovered, setHovered] = useState(false);
@@ -29,6 +33,10 @@ export default function BibliothekModel() {
         position={[-27.96, 1.7608, -12.059]}
         onPointerEnter={() => setHovered(true)}
         onPointerLeave={() => setHovered(false)}
+        onClick={(e) => {
+          e.stopPropagation();
+          onEnter360?.();
+        }}
       >
         <boxGeometry args={[30.7, 2.66, 10.8]} />
         <meshStandardMaterial
@@ -45,6 +53,10 @@ export default function BibliothekModel() {
         position={[-36.852, 1.7608, 9.5168]}
         onPointerEnter={() => setHovered(true)}
         onPointerLeave={() => setHovered(false)}
+        onClick={(e) => {
+          e.stopPropagation();
+          onEnter360?.();
+        }}
       >
         <boxGeometry args={[20.1, 2.66, 29]} />
         <meshStandardMaterial
