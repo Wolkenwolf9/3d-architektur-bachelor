@@ -40,6 +40,21 @@ import type { OrbitControls as OrbitControlsImpl } from 'three-stdlib';
 // type CameraMode = 'overview' | 'side' | 'top' | 'front' | 'orbit' | 'studio360';
 
 export default function Scene() {
+  const PANORAMAS = [
+    {
+      id: 'zwischen',
+      src: '/Bauwesen-Zwischengeschoß.jpeg',
+      label: 'Zwischengeschoss',
+    },
+    {
+      id: 'bibliothek',
+      src: '/Bauwesen-vor-Bibliothek.jpeg',
+      label: 'Vor Bibliothek',
+    },
+    { id: 'sitz', src: '/Bauwesen-Sitzbereich-1.jpeg', label: 'Sitzbereich' },
+    { id: 'lern', src: '/Bauwesen-Lernbereich-1.jpeg', label: 'Lernbereich' },
+  ];
+
   const [cameraMode, setCameraMode] = useState<CameraMode>('front');
   const [spread, setSpread] = useState(false);
   const [showArrows, setShowArrows] = useState(false);
@@ -49,6 +64,7 @@ export default function Scene() {
   const [showBib, setShowBib] = useState(false);
   const [showCameraDebug, setShowCameraDebug] = useState(false);
   const [cameraDebugText, setCameraDebugText] = useState('');
+  const [activePanorama, setActivePanorama] = useState(PANORAMAS[0].src);
 
   const controlsRef = useRef<OrbitControlsImpl | null>(null);
 
