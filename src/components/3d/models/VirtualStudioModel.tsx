@@ -50,6 +50,8 @@ export default function VirtualStudioModel({
                   alt='CampusTV Studio'
                   className='h-full w-full object-cover'
                   draggable={false}
+                  fill
+                  sizes='240px'
                 />
                 <div className='absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent' />
               </div>

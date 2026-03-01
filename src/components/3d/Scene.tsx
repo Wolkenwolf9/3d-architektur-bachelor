@@ -40,6 +40,21 @@ import type { OrbitControls as OrbitControlsImpl } from 'three-stdlib';
 // type CameraMode = 'overview' | 'side' | 'top' | 'front' | 'orbit' | 'studio360';
 
 export default function Scene() {
+  const PANORAMAS = [
+    {
+      id: 'zwischen',
+      src: '/Bauwesen-Zwischengeschoß.jpeg',
+      label: 'Zwischengeschoss',
+    },
+    {
+      id: 'bibliothek',
+      src: '/Bauwesen-vor-Bibliothek.jpeg',
+      label: 'Vor Bibliothek',
+    },
+    { id: 'sitz', src: '/Bauwesen-Sitzbereich-1.jpeg', label: 'Sitzbereich' },
+    { id: 'lern', src: '/Bauwesen-Lernbereich-1.jpeg', label: 'Lernbereich' },
+  ];
+
   const [cameraMode, setCameraMode] = useState<CameraMode>('front');
   const [spread, setSpread] = useState(false);
   const [showArrows, setShowArrows] = useState(false);
@@ -49,6 +64,7 @@ export default function Scene() {
   const [showBib, setShowBib] = useState(false);
   const [showCameraDebug, setShowCameraDebug] = useState(false);
   const [cameraDebugText, setCameraDebugText] = useState('');
+  const [activePanorama, setActivePanorama] = useState(PANORAMAS[1].src);
 
   const controlsRef = useRef<OrbitControlsImpl | null>(null);
 
@@ -104,12 +120,12 @@ export default function Scene() {
                 center={STUDIO_CENTER}
                 controlsRef={controlsRef}
               />
-              <VirtualStudio360 />
+              <VirtualStudio360 textureUrl={activePanorama} />
             </>
           )}
           <ambientLight intensity={1} />
           <Environment preset='city' background={false} />
-          <directionalLight position={[1, 1, 1]} intensity={5} castShadow />
+          {/* <directionalLight position={[1, 1, 1]} intensity={5} castShadow /> */}
           {!in360 && (
             <>
               <Model spread={spread} />
@@ -118,7 +134,7 @@ export default function Scene() {
                 <VirtualStudioModel onEnter360={enterStudio360} />
               )}
               {showAufzüge && <AufzügeModel />}
-              {showBib && <BibliothekModel />}
+              {showBib && <BibliothekModel onEnter360={enterStudio360} />}
               {showMensa && <MensaModel />}
             </>
           )}
@@ -137,6 +153,27 @@ export default function Scene() {
         onClose={() => exitStudio360('orbit')}
       />
 
+      {in360 && (
+        <div
+          className='absolute bottom-20 left-1/2 -translate-x-1/2 z-50 
+                  bg-zinc-800/70 backdrop-blur-md rounded-full shadow-lg border border-zinc-700 py-2 px-4'
+        >
+          {PANORAMAS.map((p) => (
+            <button
+              key={p.id}
+              onClick={() => setActivePanorama(p.src)}
+              className={`px-2 py-1 text-sm rounded-full transition 
+                      ${
+                        activePanorama === p.src
+                          ? 'bg-white text-black'
+                          : 'text-white hover:bg-white/10'
+                      }`}
+            >
+              {p.label}
+            </button>
+          ))}
+        </div>
+      )}
       <button
         onClick={() => setSpread(!spread)}
         className='absolute top-4 right-4 bg-white/10 text-white backdrop-blur-md border border-zinc-700 rounded-full px-4 py-2 hover:bg-white/20 transition'

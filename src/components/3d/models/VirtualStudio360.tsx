@@ -11,7 +11,7 @@ type Props = {
 };
 
 export default function VirtualStudio360({
-  textureUrl = '/shot-panoramic-composition-library.jpg',
+  textureUrl = '/Bauwesen-Zwischengeschoß.jpeg',
   radius = 0.6,
   position = [-2.48, 0.24, -0.36],
 }: Props) {
@@ -31,3 +31,7 @@ export default function VirtualStudio360({
 }
 
 useTexture.preload('/shot-panoramic-composition-library.jpg');
+useTexture.preload('/Bauwesen-Zwischengeschoß.jpeg');
+useTexture.preload('/Bauwesen-vor-Bibliothek.jpeg');
+useTexture.preload('/Bauwesen-Sitzbereich-1.jpeg');
+useTexture.preload('/Bauwesen-Lernbereich-1.jpeg');
