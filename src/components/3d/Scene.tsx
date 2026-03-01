@@ -1,25 +1,25 @@
-'use client';
+"use client";
 
-import { Canvas } from '@react-three/fiber';
-import { Environment, OrbitControls, useGLTF } from '@react-three/drei';
-import Model from './models/BauwesenModel';
-import CameraRig from './CameraRig';
-import { Suspense, useEffect, useRef, useState } from 'react';
-import CameraToggle, { CameraMode } from '../ui/CameraToggle';
-import PfeileModel from './models/PfeileModel';
-import VirtualStudioModel from './models/VirtualStudioModel';
-import Preloader from './Preloader';
-import AufzügeModel from './models/AufzügeModel';
-import Toggle from '../ui/Toggle';
-import MensaModel from './models/MensaModel';
-import CameraTracker from '../debug/CameraTracker';
-import CameraDebugPanel from '../ui/CameraDebugPanel';
-import VirtualStudio360 from './models/VirtualStudio360';
-import Studio360Camera from './Studio360Camera';
-import VirtualStudioOverlay from '../ui/VirtualStudioOverlay';
-import BibliothekModel from './models/BibliothekModel';
+import { Canvas } from "@react-three/fiber";
+import { Environment, OrbitControls, useGLTF } from "@react-three/drei";
+import Model from "./models/BauwesenModel";
+import CameraRig from "./CameraRig";
+import { Suspense, useEffect, useRef, useState } from "react";
+import CameraToggle, { CameraMode } from "../ui/CameraToggle";
+import PfeileModel from "./models/PfeileModel";
+import VirtualStudioModel from "./models/VirtualStudioModel";
+import Preloader from "./Preloader";
+import AufzügeModel from "./models/AufzügeModel";
+import Toggle from "../ui/Toggle";
+import MensaModel from "./models/MensaModel";
+import CameraTracker from "../debug/CameraTracker";
+import CameraDebugPanel from "../ui/CameraDebugPanel";
+import VirtualStudio360 from "./models/VirtualStudio360";
+import Studio360Camera from "./Studio360Camera";
+import VirtualStudioOverlay from "../ui/VirtualStudioOverlay";
+import BibliothekModel from "./models/BibliothekModel";
 
-import type { OrbitControls as OrbitControlsImpl } from 'three-stdlib';
+import type { OrbitControls as OrbitControlsImpl } from "three-stdlib";
 
 // function CameraRig() {
 //   const scroll = useScroll();
@@ -42,20 +42,20 @@ import type { OrbitControls as OrbitControlsImpl } from 'three-stdlib';
 export default function Scene() {
   const PANORAMAS = [
     {
-      id: 'zwischen',
-      src: '/Bauwesen-Zwischengeschoß.jpeg',
-      label: 'Zwischengeschoss',
+      id: "zwischen",
+      src: "/Bauwesen-Zwischengeschoß.jpeg",
+      label: "Zwischengeschoss",
     },
     {
-      id: 'bibliothek',
-      src: '/Bauwesen-vor-Bibliothek.jpeg',
-      label: 'Vor Bibliothek',
+      id: "bibliothek",
+      src: "/Bauwesen-vor-Bibliothek.jpeg",
+      label: "Vor Bibliothek",
     },
-    { id: 'sitz', src: '/Bauwesen-Sitzbereich-1.jpeg', label: 'Sitzbereich' },
-    { id: 'lern', src: '/Bauwesen-Lernbereich-1.jpeg', label: 'Lernbereich' },
+    { id: "sitz", src: "/Bauwesen-Sitzbereich-1.jpeg", label: "Sitzbereich" },
+    { id: "lern", src: "/Bauwesen-Lernbereich-1.jpeg", label: "Lernbereich" },
   ];
 
-  const [cameraMode, setCameraMode] = useState<CameraMode>('front');
+  const [cameraMode, setCameraMode] = useState<CameraMode>("front");
   const [spread, setSpread] = useState(false);
   const [showArrows, setShowArrows] = useState(false);
   const [showVirtualStudio, setShowVirtualStudio] = useState(false);
@@ -63,31 +63,31 @@ export default function Scene() {
   const [showMensa, setShowMensa] = useState(false);
   const [showBib, setShowBib] = useState(false);
   const [showCameraDebug, setShowCameraDebug] = useState(false);
-  const [cameraDebugText, setCameraDebugText] = useState('');
+  const [cameraDebugText, setCameraDebugText] = useState("");
   const [activePanorama, setActivePanorama] = useState(PANORAMAS[1].src);
 
   const controlsRef = useRef<OrbitControlsImpl | null>(null);
 
   const STUDIO_CENTER: [number, number, number] = [-2.48, 0.24, -0.36];
-  const in360 = cameraMode === 'studio360';
+  const in360 = cameraMode === "studio360";
 
   useEffect(() => {
-    useGLTF.preload('/Haus-Bauwesen-standard_komprimiert.glb');
-    useGLTF.preload('/Eingangspfeile.glb');
+    useGLTF.preload("/Haus-Bauwesen-standard_komprimiert.glb");
+    useGLTF.preload("/Eingangspfeile.glb");
   }, []);
 
   const enterStudio360 = () => {
-    setCameraMode('studio360');
+    setCameraMode("studio360");
   };
 
-  const exitStudio360 = (next: CameraMode = 'orbit') => {
+  const exitStudio360 = (next: CameraMode = "orbit") => {
     setCameraMode(next);
   };
 
   return (
     <div className='relative w-full h-screen'>
       <Canvas
-        style={{ background: '#0a0a0a' }}
+        style={{ background: "#0a0a0a" }}
         shadows
         camera={{ near: 0.1, fov: 75 }}
       >
@@ -98,7 +98,7 @@ export default function Scene() {
             enabled={showCameraDebug}
             onUpdate={setCameraDebugText}
           />
-          {cameraMode === 'orbit' && (
+          {cameraMode === "orbit" && (
             <OrbitControls ref={controlsRef} makeDefault enableDamping />
           )}
           {/* <CameraRig /> */}
@@ -142,7 +142,7 @@ export default function Scene() {
         </Suspense>
       </Canvas>
       <CameraToggle
-        activeMode={cameraMode === 'studio360' ? null : cameraMode}
+        activeMode={cameraMode === "studio360" ? null : cameraMode}
         onChange={(m) => setCameraMode(m)}
       />
 
@@ -150,7 +150,7 @@ export default function Scene() {
       {/* //Button zum auffächern des Modells */}
       <VirtualStudioOverlay
         open={in360}
-        onClose={() => exitStudio360('orbit')}
+        onClose={() => exitStudio360("orbit")}
       />
 
       {in360 && (
@@ -165,8 +165,8 @@ export default function Scene() {
               className={`px-2 py-1 text-sm rounded-full transition 
                       ${
                         activePanorama === p.src
-                          ? 'bg-white text-black'
-                          : 'text-white hover:bg-white/10'
+                          ? "bg-white text-black"
+                          : "text-white hover:bg-white/10"
                       }`}
             >
               {p.label}
@@ -174,12 +174,12 @@ export default function Scene() {
           ))}
         </div>
       )}
-      <button
+      {/* <button
         onClick={() => setSpread(!spread)}
         className='absolute top-4 right-4 bg-white/10 text-white backdrop-blur-md border border-zinc-700 rounded-full px-4 py-2 hover:bg-white/20 transition'
       >
         {spread ? 'Zusammenfügen' : 'Verteilen'}
-      </button>
+      </button> */}
       {/* //Button um Komponenten ein/aus zu togglen */}
       <div className='absolute top-4 left-4 flex flex-col gap-3 bg-white/10 p-4 rounded-xl backdrop-blur-md border border-zinc-700'>
         <Toggle
