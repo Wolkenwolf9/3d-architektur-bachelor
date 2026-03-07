@@ -1,16 +1,18 @@
-"use client";
+'use client';
 
-import { useRef, useState } from "react";
-import * as THREE from "three";
-import { useFrame } from "@react-three/fiber";
-import { Html } from "@react-three/drei";
+import { useRef, useState } from 'react';
+import * as THREE from 'three';
+import { useFrame } from '@react-three/fiber';
+import { Html } from '@react-three/drei';
 
 function Aufzug({
   position,
   label,
+  onEnter360,
 }: {
   position: [number, number, number];
   label: string;
+  onEnter360?: () => void;
 }) {
   const meshRef = useRef<THREE.Mesh>(null);
   const [hovered, setHovered] = useState(false);
@@ -28,6 +30,10 @@ function Aufzug({
       position={position}
       onPointerEnter={() => setHovered(true)}
       onPointerLeave={() => setHovered(false)}
+      onClick={(e) => {
+        e.stopPropagation();
+        onEnter360?.();
+      }}
     >
       <boxGeometry args={[1.84883, 21.7211, 2.2797]} />
       <meshStandardMaterial
@@ -47,12 +53,28 @@ function Aufzug({
   );
 }
 
-export default function AufzügeModel() {
+export default function AufzügeModel({
+  onEnter360,
+}: {
+  onEnter360?: () => void;
+}) {
   return (
     <group scale={0.04}>
-      <Aufzug position={[40.124, 10, -22.324]} label='Aufzug 1' />
-      <Aufzug position={[-3.0851, 10, -22.324]} label='Aufzug 2' />
-      <Aufzug position={[-46.273, 10, -22.324]} label='Aufzug 3' />
+      <Aufzug
+        position={[40.124, 10, -22.324]}
+        label='Aufzug 1'
+        onEnter360={onEnter360}
+      />
+      <Aufzug
+        position={[-3.0851, 10, -22.324]}
+        label='Aufzug 2'
+        onEnter360={onEnter360}
+      />
+      <Aufzug
+        position={[-46.273, 10, -22.324]}
+        label='Aufzug 3'
+        onEnter360={onEnter360}
+      />
     </group>
   );
 }

@@ -5,7 +5,11 @@ import * as THREE from 'three';
 import { useFrame } from '@react-three/fiber';
 import { Html } from '@react-three/drei';
 
-export default function MensaModel() {
+export default function MensaModel({
+  onEnter360,
+}: {
+  onEnter360?: () => void;
+}) {
   const meshRef = useRef<THREE.Mesh>(null);
   const [hovered, setHovered] = useState(false);
 
@@ -22,6 +26,10 @@ export default function MensaModel() {
       <mesh
         onPointerEnter={() => setHovered(true)}
         onPointerLeave={() => setHovered(false)}
+        onClick={(e) => {
+          e.stopPropagation();
+          onEnter360?.();
+        }}
         ref={meshRef}
         position={[-66.141, 3.7119, 42.599]}
       >

@@ -65,7 +65,7 @@ export default function Scene() {
   const [showMensa, setShowMensa] = useState(false);
   const [showBib, setShowBib] = useState(false);
   const [showCameraDebug, setShowCameraDebug] = useState(false);
-  const [showControlsMenu, setShowControlsMenu] = useState(true);
+  const [showControlsMenu, setShowControlsMenu] = useState(false);
   const [cameraDebugText, setCameraDebugText] = useState('');
   const [activePanorama, setActivePanorama] = useState(PANORAMAS[1].src);
 
@@ -136,9 +136,9 @@ export default function Scene() {
               {showVirtualStudio && (
                 <VirtualStudioModel onEnter360={enterStudio360} />
               )}
-              {showAufzüge && <AufzügeModel />}
+              {showAufzüge && <AufzügeModel onEnter360={enterStudio360} />}
               {showBib && <BibliothekModel onEnter360={enterStudio360} />}
-              {showMensa && <MensaModel />}
+              {showMensa && <MensaModel onEnter360={enterStudio360} />}
             </>
           )}
           {/* </ScrollControls> */}
