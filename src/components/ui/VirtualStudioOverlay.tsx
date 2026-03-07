@@ -27,9 +27,8 @@ export default function VirtualStudioOverlay({
       {/* Optionaler Backdrop auf Mobile, wenn ausgeklappt */}
       {open && !mobileCollapsed && (
         <button
-          aria-label='Overlay schließen'
           onClick={() => setCollapsedMobile(true)}
-          className='sm:hidden fixed inset-0 z-40 bg-black/40'
+          className='sm:hidden fixed inset-0 z-20 bg-black/40'
         />
       )}
 
@@ -47,9 +46,6 @@ export default function VirtualStudioOverlay({
         {open && (
           <button
             type='button'
-            aria-label={
-              collapsedMobile ? 'Overlay öffnen' : 'Overlay einklappen'
-            }
             onClick={() => setCollapsedMobile((v) => !v)}
             className='
               sm:hidden
@@ -99,7 +95,6 @@ export default function VirtualStudioOverlay({
                 }
               }}
               className='text-white/60 hover:text-white transition'
-              aria-label='Schließen'
             >
               <X size={18} />
             </button>

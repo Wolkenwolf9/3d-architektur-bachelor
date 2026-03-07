@@ -35,7 +35,7 @@ export default function CameraToggle({
   };
 
   return (
-    <div className='fixed bottom-4 left-1/2 -translate-x-1/2 z-50 flex max-w-[95vw] overflow-x-auto bg-zinc-800/70 backdrop-blur-md rounded-full shadow-lg border border-zinc-700 p-1'>
+    <div className='fixed bottom-4 left-1/2 -translate-x-1/2 z-55 flex max-w-[95vw] overflow-x-auto bg-zinc-800/70 backdrop-blur-md rounded-full shadow-lg border border-zinc-700 p-1'>
       {modes.map((m) => {
         const isActive = activeMode === m.id; // bei null -> nie true
 
