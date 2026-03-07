@@ -128,7 +128,7 @@ export default function Scene() {
           )}
           <ambientLight intensity={1} />
           <Environment preset='city' background={false} />
-          {/* <directionalLight position={[1, 1, 1]} intensity={5} castShadow /> */}
+          <directionalLight position={[1, 1, 1]} intensity={2} castShadow />
           {!in360 && (
             <>
               <Model spread={spread} />

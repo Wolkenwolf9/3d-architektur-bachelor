@@ -26,8 +26,8 @@ export default function Model({ spread = false }: ModelProps) {
         clone.rotation.copy(child.rotation);
         clone.scale.copy(child.scale);
 
-        // clone.castShadow = true;
-        // clone.receiveShadow = true;
+        clone.castShadow = true;
+        clone.receiveShadow = true;
 
         result.push(clone);
       }
